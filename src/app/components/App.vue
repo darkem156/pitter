@@ -137,7 +137,7 @@ export default {
                     this.$forceUpdate();
                     return;
                 }
-                fetch('http://localhost:3000/api/initSession',
+                fetch('/api/initSession',
                 {
                     method: 'POST',
                     body: JSON.stringify(data),
