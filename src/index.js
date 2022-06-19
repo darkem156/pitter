@@ -63,8 +63,7 @@ app.get('/api/getPublications', async (req, res) =>
     if (req.session.id_user > 0) 
     {
         console.log(req.session.id_user);
-        let data = await database.dbConect(`SELECT * FROM publicaciones JOIN users ON id_usuario = id JOIN following ON id_usuario = id_following WHERE id_follower = ${parseInt(req.session.id_user)} ORDER BY date DESC`)
-        if(!data[0]) data = await database.dbConect(`SELECT * FROM publicaciones JOIN users ON id_usuario = id JOIN following ON id_usuario = id_following WHERE date LIKE '%${(new Date()).toJSON().split('T')[0]}%' AND id_usuario != ${req.session.id_user}`)
+        const data = await database.dbConect(`SELECT * FROM publicaciones JOIN users ON id_usuario = id JOIN following ON id_usuario = id_following WHERE id_follower = ${parseInt(req.session.id_user)} ORDER BY date DESC`)
         res.json(data);
     }
 })
