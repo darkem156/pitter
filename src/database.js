@@ -10,12 +10,15 @@ const conection =
 const con = mysql.createConnection(conection);
 
 dbConect = (query) =>{
-    return new Promise((resolve, reject)=>{
+    const con = mysql.createConnection(conection);
+    let data = new Promise((resolve, reject)=>{
         con.query(query,  (err, results)=>{
             if(err) return reject(err);
             return resolve(results);
         });
     });
+    con.end();
+    return data;
 };
 
 options = () =>
