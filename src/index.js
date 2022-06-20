@@ -64,8 +64,11 @@ app.get('/api/getPublications', async (req, res) =>
     {
         console.log(req.session.id_user);
         let data = await database.dbConect(`SELECT * FROM publicaciones JOIN users ON id_usuario = id JOIN following ON id_usuario = id_following WHERE id_follower = ${parseInt(req.session.id_user)} ORDER BY date DESC`)
-        if(!data[0]) data = await database.dbConect(`SELECT * FROM publicaciones JOIN users ON id_usuario = id JOIN following ON id_usuario = id_following WHERE date LIKE '%${(new Date()).toJSON().split('T')[0]}%'`);
-        console.log((new Date()).toJSON().split('T')[0]);
+        //let date = (new Date(`${new Date().getFullYear()}-0${new Date().getMonth()+1}-${new Date().getDate()}`)).toJSON().split('T')[0];
+        let date = new Date();
+        let dateArray = [date.getFullYear(), date.getMonth()+1, date.getDate()]
+        date = parseInt(`${date.getFullYear()}0${date.getMonth()+1}${date.getDate()}000000`);
+        if(!data[0]) data = await database.dbConect(`SELECT * FROM publicaciones JOIN users ON (id_usuario = id) WHERE date > ${date} ORDER BY date DESC`);
         res.json(data);
     }
 })
