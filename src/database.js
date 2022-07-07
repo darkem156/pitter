@@ -7,7 +7,6 @@ const conection =
     password: 'password',
     database: 'pitter'
 }
-const con = mysql.createConnection(conection);
 
 dbConect = (query) =>{
     const con = mysql.createConnection(conection);
