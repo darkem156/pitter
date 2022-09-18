@@ -5,8 +5,6 @@ const session = require('express-session');
 const MySQLDB = require('express-mysql-session');
 const database = require('./database');
 const app = express();
-const publish = require('./functions/publish');
-const follow = require('./functions/follow');
 
 //settings
 app.set('port', process.env.PORT || 3000);
@@ -20,7 +18,7 @@ const sessionStorage = new MySQLDB(database.options);
 app.use(session(
     {
         key: 'cookie-session',
-        secret: 'xdjwmknchewcimkchvjmKFBV1oejucjbhi32ubufo3w1b',
+        secret: process.env.COOKIE_SECRET || 'secret',
         store: sessionStorage,
         resave: false,
         saveUninitialized: true
@@ -35,7 +33,7 @@ app.use('/api/user', require('./routes/user'));
 
 app.get('/user/:id', async (req, res) =>
 {
-    if(parseInt(req.url.split('/')[2]) === req.session.id_user) res.send('el usuario es el mismo');
+    if(req.params.id === req.session.id_user) res.send('el usuario es el mismo');
     else res.sendFile(__dirname + '/public/user/user.html');
 })
 

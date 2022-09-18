@@ -7,7 +7,6 @@ let regExpEmail = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+
 
 router.post('/signIn', async (req, res) => 
 {
-    //if (req.body.dato === '' || req.body.password === '') res.json({"error": ""})
     if (req.body.dato === '') res.json({"error": "Debes utilizar un correo electrónico, nombre de usuario, id o teléfono válido para ingresar"});
     else if (req.body.password === '') res.json({"error": "Debes utilizar una contraseña para ingresar"});
     else
@@ -15,7 +14,6 @@ router.post('/signIn', async (req, res) =>
         let id = isNaN(parseInt(req.body.dato)) ? -1 : req.body.dato
         let correct = await database.query(`SELECT * FROM private WHERE id = ${id} OR user_name='${req.body.dato}' OR email='${req.body.dato}'`)
         let passwordCorrect = await bcrypt.compare(req.body.password, correct[0].password);
-        console.log(id);
         if(passwordCorrect)
         {
             let userInfo = await database.query(`SELECT * FROM users WHERE id=${correct[0].id}`);
@@ -42,7 +40,6 @@ router.post('/signUp', async (req, res) =>
     else
     {
         req.body.password = await bcrypt.hash(req.body.password, 8);
-        console.log(req.body.password);
         let user_name = req.body.user_name
         let newUser = await database.query(`INSERT INTO users(name, user_name, created_at) VALUES('${req.body.name}', '${user_name}', NOW())`);
         let id = await database.query(`SELECT id FROM users WHERE user_name = '${user_name}'`)

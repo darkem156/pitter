@@ -6,7 +6,6 @@ const router = express.Router();
 router.get('/:id', async (req, res)=>
 {
     const data = await database.query(`SELECT * FROM publicaciones where id_pub = ${req.url.split("/")[1]}`);
-    console.log(data[0].id_pub);
     res.json(data);
 });
 
