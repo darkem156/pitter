@@ -15,12 +15,8 @@ app.set('port', process.env.PORT || 3000);
 app.use(morgan('dev'));
 app.use(express.json());
 
-//routes
-app.use('/api/publication', require('./routes/publications'));
-app.use('/api', require('./routes/sign'));
-
 //sessions
-const sessionStorage = new MySQLDB(database.options());
+const sessionStorage = new MySQLDB(database.options);
 app.use(session(
     {
         key: 'cookie-session',
@@ -30,6 +26,10 @@ app.use(session(
         saveUninitialized: true
     }
 ))
+
+//routes
+app.use('/api/publication', require('./routes/publications'));
+app.use('/api', require('./routes/sign'));
 
 app.post('/api/initSession', (req, res) =>
 {
@@ -63,19 +63,13 @@ app.get('/api/getPublications', async (req, res) =>
     if (req.session.id_user > 0) 
     {
         console.log(req.session.id_user);
-        let data = await database.dbConect(`SELECT * FROM publicaciones JOIN users ON id_usuario = id JOIN following ON id_usuario = id_following WHERE id_follower = ${parseInt(req.session.id_user)} ORDER BY date DESC`)
+        let data = await database.query(`SELECT * FROM publicaciones JOIN users ON id_usuario = id JOIN following ON id_usuario = id_following WHERE id_follower = ${parseInt(req.session.id_user)} ORDER BY date DESC`)
         //let date = (new Date(`${new Date().getFullYear()}-0${new Date().getMonth()+1}-${new Date().getDate()}`)).toJSON().split('T')[0];
         let date = new Date();
         date = parseInt(`${date.getFullYear()}0${date.getMonth()+1}${date.getDate()-1}000000`);
-        if(!data[0]) data = await database.dbConect(`SELECT * FROM publicaciones JOIN users ON (id_usuario = id) WHERE date > ${date} ORDER BY date DESC`);
+        if(!data[0]) data = await database.query(`SELECT * FROM publicaciones JOIN users ON (id_usuario = id) WHERE date > ${date} ORDER BY date DESC`);
         res.json(data);
     }
-})
-
-app.post('/api/publication/publish', async (req, res) =>
-{
-    let published = await publish.publish(parseInt(req.session.id_user), req.body.content);
-    res.json(published);
 })
 
 app.get('/user/:id', async (req, res) =>
@@ -87,13 +81,13 @@ app.get('/user/:id', async (req, res) =>
 app.get('/api/user/:id', async (req, res)=>
 {
     let id = req.url.split("/")[3];
-    const data = await database.dbConect(`SELECT * FROM users where id = ${id}`);
+    const data = await database.query(`SELECT * FROM users where id = ${id}`);
     if (data[0])
     {
-        const followers = await database.dbConect(`SELECT count(*) FROM following WHERE id_following = ${id}`);
-        const following = await database.dbConect(`SELECT count(*) FROM following WHERE id_follower = ${id}`);
-        const publications = await database.dbConect(`SELECT * FROM publicaciones WHERE id_usuario = ${id} ORDER BY date DESC`);
-        let followed = req.session.id_user ? await database.dbConect(`SELECT * FROM following WHERE id_follower = ${parseInt(req.session.id_user)} AND id_following = ${id}`) : false;
+        const followers = await database.query(`SELECT count(*) FROM following WHERE id_following = ${id}`);
+        const following = await database.query(`SELECT count(*) FROM following WHERE id_follower = ${id}`);
+        const publications = await database.query(`SELECT * FROM publicaciones WHERE id_usuario = ${id} ORDER BY date DESC`);
+        let followed = req.session.id_user ? await database.query(`SELECT * FROM following WHERE id_follower = ${parseInt(req.session.id_user)} AND id_following = ${id}`) : false;
         if(followed[0]) data[0].followed = true;
         else data[0].followed = false;
         console.log(data[0].id);

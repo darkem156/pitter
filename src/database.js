@@ -1,29 +1,32 @@
-//db conection
 const mysql = require('mysql');
-const conection = 
-{
-    host: 'localhost',
-    user: 'user',
-    password: 'password',
-    database: 'pitter'
-}
+require('dotenv').config();
 
-dbConect = (query) =>{
-    const con = mysql.createConnection(conection);
-    let data = new Promise((resolve, reject)=>{
-        con.query(query,  (err, results)=>{
-            if(err) return reject(err);
-            return resolve(results);
-        });
+class DB
+{
+  constructor()
+  {
+    this.options =
+    {
+      host: process.env.DB_HOST || 'localhost',
+      user: process.env.DB_USER || 'root',
+      password: process.env.DB_PASSWORD || 'password',
+      database: process.env.DB_DATABASE || 'pitter',
+    }
+  }
+  query(query)
+  {
+    const con = mysql.createConnection(this.options);
+    let data = new Promise((resolve, reject) => 
+    {
+      con.query(query,  (err, results )=>
+      {
+        if(err) return reject(err);
+        return resolve(results);
+      });
     });
     con.end();
-    return data;
-};
-
-options = () =>
-{
-    return conection;
+    return data
+  }
 }
 
-module.exports.dbConect = dbConect;
-module.exports.options = options;
+module.exports = new DB();
