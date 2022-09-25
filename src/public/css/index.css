@@ -121,30 +121,44 @@
     text-align: center;
 }
 
+#form-publish-container
+{
+  display: flex;
+  justify-content: space-around;
+  margin: 4vh 0 8vh 0;
+}
+
+
 #form-publish
 {
-    margin: 5vh 9vw 9vh;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+  display: flex;
+  align-items: center;
 }
 
 #text-publish-container
 {
-    text-align: right;
+  margin-right: 1.5vw;
 }
 
 #button-publish-container
 {
-    text-align: left;
-    margin-left: 3vw;
+  text-align: left;
+  margin-left: 1.5vw;
 }
 
 #sign-container
 {
     background-color: #8FBCFF;
-    margin: 9vh 20vw;
+    margin: 9vh 30vw;
     text-align: center;
     padding: 1vh;
+}
+
+#form-sign-in
+{
+  display: flex;
+  flex-direction: column;
+  margin: 0 3vw;
 }
 
 .button-sign
@@ -171,8 +185,7 @@
     text-align: center;
     border: none;
     border-radius: 8px;
-    margin: 3vh 2vw;
-    padding: 0 7vw;
+    margin: 3vh 0;
 }
 
 .text-sign::placeholder
@@ -224,4 +237,42 @@
 .button-unfollow
 {
     background-color: #D90000;
+}
+
+@media screen and (max-width: 475px)
+{
+  #text-publish
+  {
+    font-size: 3vh;
+  }
+
+  #button-publish
+  {
+    font-size: 3vh;
+  }
+
+  #text-publish-container
+  {
+    margin: 0 0 2vh 0;
+  }
+
+  #button-publish-container
+  {
+    margin: 0 0 2vh 0;
+  }
+
+  #form-publish
+  {
+    flex-direction: column;
+  }
+
+  .user-info
+  {
+    font-size: 4vh;
+  }
+
+  #sign-container
+  {
+    margin: 9vh 20vw;
+  }
 }
