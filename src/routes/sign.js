@@ -13,6 +13,11 @@ router.post('/signIn', async (req, res) =>
     {
         let id = isNaN(parseInt(req.body.dato)) ? -1 : req.body.dato
         let correct = await database.query(`SELECT * FROM private WHERE id = ${id} OR user_name='${req.body.dato}' OR email='${req.body.dato}'`)
+        if(!correct[0])
+        {
+          res.json({"error": "Usuario o contraseña incorrectos"});
+          return;
+        }
         let passwordCorrect = await bcrypt.compare(req.body.password, correct[0].password);
         if(passwordCorrect)
         {
