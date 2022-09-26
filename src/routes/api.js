@@ -22,10 +22,10 @@ router.post('/initSession', (req, res) =>
     {
         if(req.session.id_user > 0) 
         {
-            res.json({"sesion": "true", "id_user": req.session.id_user});
+            res.json({ session: true, id_user: req.session.id_user });
             return;
         }
-        res.json({"sesion": "false"})
+        res.json({ session: false })
         return;
     }
     else
@@ -33,7 +33,7 @@ router.post('/initSession', (req, res) =>
         req.session.id_user = req.body.id_user;
         req.session.user = req.body.user;
         req.session.name = req.body.name;
-        res.json({"sesion": "true"});
+        res.json({ session: true });
         return;
     }
 })
