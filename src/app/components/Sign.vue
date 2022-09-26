@@ -8,19 +8,11 @@
     <button v-on:click="changeForm" class="changeForm" >No tengo una cuenta</button>
   </div>
   <div v-else>
-    <form @submit.prevent="signUp">
-      <div>
-        <input class="text-sign" placeholder="name" v-model="datos.name" type="text">
-      </div>
-      <div>
-        <input class="text-sign" placeholder="user name" v-model="datos.user_name" type="text" name="" id="">
-      </div>
-      <div>
-        <input class="text-sign" placeholder="email" v-model="datos.email" type="text">
-      </div>
-      <div>
-        <input class="text-sign" placeholder="password" v-model="datos.password" type="password" name="" id="">
-      </div>
+    <form @submit.prevent="signUp" id="form-sign-in">
+      <input class="text-sign" placeholder="name" v-model="datos.name" type="text">
+      <input class="text-sign" placeholder="user name" v-model="datos.user_name" type="text" name="" id="">
+      <input class="text-sign" placeholder="email" v-model="datos.email" type="text">
+      <input class="text-sign" placeholder="password" v-model="datos.password" type="password" name="" id="">
       <button class="button-sign">Sign Up</button>
     </form>
     <button v-on:click="changeForm" class="changeForm">Ya tengo una cuenta</button>
