@@ -239,7 +239,7 @@
     background-color: #D90000;
 }
 
-@media screen and (max-width: 475px)
+@media screen and (max-width: 557px)
 {
   #text-publish
   {
@@ -274,5 +274,10 @@
   #sign-container
   {
     margin: 9vh 20vw;
+  }
+
+  .fecha-hora
+  {
+    display: none;
   }
 }
