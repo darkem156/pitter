@@ -16,26 +16,10 @@ router.get('/getPublications', async (req, res) =>
   else res.status(403).json({ error: "Must login" })
 })
 
-router.post('/initSession', (req, res) =>
+router.get("/getSession", (req, res) =>
 {
-    if(req.body.session)
-    {
-        if(req.session.id_user) 
-        {
-            res.json({ session: true, id_user: req.session.id_user });
-            return;
-        }
-        res.json({ session: false })
-        return;
-    }
-    else
-    {
-        req.session.id_user = req.body.id_user;
-        req.session.user = req.body.user;
-        req.session.name = req.body.name;
-        res.json({ session: true });
-        return;
-    }
+  if(req.session.id_user) res.json({ session: true, id_user: req.session.id_user })
+  else res.json({ session: false });
 })
 
 module.exports = router;

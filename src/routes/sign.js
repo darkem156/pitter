@@ -29,6 +29,9 @@ router.post('/signIn', async (req, res) =>
                 "name": userInfo[0].name,
                 "error": ''
             }
+          req.session.id_user = parseInt(userInfo[0].id);
+          req.session.user = userInfo[0].user_name;
+          req.session.name = userInfo[0].name;
             res.json(data);
         }
         else res.status(404).json({"error": "Usuario o contraseña incorrectos"});

@@ -78,10 +78,9 @@ export default {
   {
     async session()
     {
-      var resp = await fetch('/api/initSession',
+      var resp = await fetch('/api/getSession',
       {
-        method: 'POST',
-        body: JSON.stringify({'session': true}),
+        method: 'GET',
         headers:
         {
           'Accept': 'application/json',

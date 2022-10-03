@@ -57,22 +57,7 @@ export default {
             console.log(data.error);
             return;
           }
-          fetch('/api/initSession',
-          {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers:
-            {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            }
-          })
-          .then(res => res.json())
-          .then(resp => 
-          {
-            console.log(resp)
-            location.reload();
-          })
+          location.reload()
         })
       },
     changeForm()
