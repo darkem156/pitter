@@ -1,6 +1,6 @@
 const database = require('../database');
 
-publish = (id_user, content) =>
+const publish = (id_user, content) =>
 {
     if(content != '') database.query(`INSERT INTO publicaciones(id_usuario, contenido, date) VALUES(${id_user}, '${content}', NOW())`);
     else return {"error": "El contenido no puede estar vacío"};

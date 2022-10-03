@@ -20,21 +20,21 @@ router.get('/:id', async (req, res)=>
         data[0].publications = publications;
         res.json(data);
     }
-    else res.json([{"name": "Este Usuario No Existe"}]);
+    else res.status(404).json([{"name": "Este Usuario No Existe"}]);
 });
 
 router.get('/:id/follow', async (req, res) =>
 {
     const { id } = req.params;
     const followed = follow.follow(id, parseInt(req.session.id_user));
-    res.json(followed);
+    res.status(201).json(followed);
 })
 
 router.get('/:id/unFollow', async (req, res) =>
 {
     const { id } = req.params;
     const followed = follow.unFollow(id, parseInt(req.session.id_user));
-    res.json({"followed": "unfollowed"});
+    res.status(205).json({"followed": "unfollowed"});
 })
 
 module.exports = router;

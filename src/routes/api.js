@@ -13,14 +13,14 @@ router.get('/getPublications', async (req, res) =>
         if(!data[0]) data = await database.query(`SELECT * FROM publicaciones JOIN users ON (id_usuario = id) WHERE date > ${date} ORDER BY date DESC`);
         res.json(data);
     }
+  else res.status(403).json({ error: "Must login" })
 })
 
 router.post('/initSession', (req, res) =>
 {
-    info = req.session;
-    if(req.body.session === true)
+    if(req.body.session)
     {
-        if(req.session.id_user > 0) 
+        if(req.session.id_user) 
         {
             res.json({ session: true, id_user: req.session.id_user });
             return;

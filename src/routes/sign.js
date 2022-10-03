@@ -31,17 +31,17 @@ router.post('/signIn', async (req, res) =>
             }
             res.json(data);
         }
-        else res.json({"error": "Usuario o contraseña incorrectos"});
+        else res.status(404).json({"error": "Usuario o contraseña incorrectos"});
     }
 })
 
 router.post('/signUp', async (req, res) =>
 {
     let emailOk = regExpEmail.test(req.body.email);
-    if (req.body.user_name === '' || req.body.name === '' || req.body.email === '' || req.body.password === '') res.json({"error": "Debes llenar todos los datos"});
-    else if (!emailOk) res.json({"error": "Debes ingresar un correo válido"});
-    else if ((await database.query(`SELECT id FROM users WHERE user_name = '${req.body.user_name}'`))[0]) res.json({"error": "Nombre de usuario en uso"});
-    else if ((await database.query(`SELECT id FROM private WHERE email = '${req.body.email}'`))[0]) res.json({"error": "Este correo ya está registrado"});
+    if (req.body.user_name === '' || req.body.name === '' || req.body.email === '' || req.body.password === '') res.status(400).json({"error": "Debes llenar todos los datos"});
+    else if (!emailOk) res.status(400).json({"error": "Debes ingresar un correo válido"});
+    else if ((await database.query(`SELECT id FROM users WHERE user_name = '${req.body.user_name}'`))[0]) res.status(409).json({"error": "Nombre de usuario en uso"});
+    else if ((await database.query(`SELECT id FROM private WHERE email = '${req.body.email}'`))[0]) res.status(409).json({"error": "Este correo ya está registrado"});
     else
     {
         req.body.password = await bcrypt.hash(req.body.password, 8);
@@ -50,7 +50,7 @@ router.post('/signUp', async (req, res) =>
         let id = await database.query(`SELECT id FROM users WHERE user_name = '${user_name}'`)
         id = id[0].id
         let newPass = await database.query(`INSERT INTO private(id, user_name, password, email) VALUES(${id}, '${user_name}', '${req.body.password}', '${req.body.email}')`)
-        res.json({"error": ""});
+        res.status(201).json({"error": ""});
     }
 })
 
