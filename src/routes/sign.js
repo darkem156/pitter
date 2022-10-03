@@ -3,12 +3,12 @@ const bcrypt = require('bcryptjs');
 const database = require('../database');
 const router = express.Router();
 
-let regExpEmail = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g;
+let regExpEmail = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
 
 router.post('/signIn', async (req, res) => 
 {
-    if (req.body.dato === '') res.json({"error": "Debes utilizar un correo electrónico, nombre de usuario, id o teléfono válido para ingresar"});
-    else if (req.body.password === '') res.json({"error": "Debes utilizar una contraseña para ingresar"});
+    if (!req.body.dato) res.status(400).json({"error": "Debes utilizar un correo electrónico, nombre de usuario, id o teléfono válido para ingresar"});
+    else if (!req.body.password) res.status(400).json({"error": "Debes utilizar una contraseña para ingresar"});
     else
     {
         let id = isNaN(parseInt(req.body.dato)) ? -1 : req.body.dato
@@ -34,15 +34,14 @@ router.post('/signIn', async (req, res) =>
           req.session.name = userInfo[0].name;
             res.json(data);
         }
-        else res.status(404).json({"error": "Usuario o contraseña incorrectos"});
+        else res.json({"error": "Usuario o contraseña incorrectos"});
     }
 })
 
 router.post('/signUp', async (req, res) =>
 {
-    let emailOk = regExpEmail.test(req.body.email);
-    if (req.body.user_name === '' || req.body.name === '' || req.body.email === '' || req.body.password === '') res.status(400).json({"error": "Debes llenar todos los datos"});
-    else if (!emailOk) res.status(400).json({"error": "Debes ingresar un correo válido"});
+    if (!req.body.user_name || !req.body.name || !req.body.email || !req.body.password ) res.status(400).json({"error": "Debes llenar todos los datos"});
+    else if (!regExpEmail.test(req.body.email)) res.status(400).json({"error": "Debes ingresar un correo válido"});
     else if ((await database.query(`SELECT id FROM users WHERE user_name = '${req.body.user_name}'`))[0]) res.status(409).json({"error": "Nombre de usuario en uso"});
     else if ((await database.query(`SELECT id FROM private WHERE email = '${req.body.email}'`))[0]) res.status(409).json({"error": "Este correo ya está registrado"});
     else

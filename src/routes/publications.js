@@ -13,7 +13,10 @@ router.get('/:id', async (req, res)=>
 router.post('/publish', async (req, res) =>
 {
   let published = publish.publish(parseInt(req.session.id_user), req.body.content);
-  res.status(201).json(published);
+
+  if(!req.session.id_user) res.status(401).json({ error: "Necesitas iniciar sesion para publicar" })
+  else if(published.error) res.status(400).json(published)
+  else res.status(201).json(published)
 })
 
 module.exports = router;

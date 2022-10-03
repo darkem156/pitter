@@ -25,16 +25,24 @@ router.get('/:id', async (req, res)=>
 
 router.get('/:id/follow', async (req, res) =>
 {
+  if(req.session.id_user)
+  {
     const { id } = req.params;
     const followed = follow.follow(id, parseInt(req.session.id_user));
     res.status(201).json(followed);
+  }
+  else res.status(401).json({ error: "Debes iniciar sesion para seguir a un usuario" })
 })
 
 router.get('/:id/unFollow', async (req, res) =>
 {
+  if(req.session.id_user)
+  {
     const { id } = req.params;
     const followed = follow.unFollow(id, parseInt(req.session.id_user));
     res.status(205).json({"followed": "unfollowed"});
+  }
+  else res.status(401).json({ error: "Debes iniciar sesion para seguir a un usuario" })
 })
 
 module.exports = router;
