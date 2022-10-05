@@ -12,8 +12,7 @@ jobs:
   avoid_reduncy:
     runs-on: ubuntu-18.04
     setps: 
-      - name: Cancel Previous Reduncy Processes
-        uses: styfle/cancel-workflow-action
+      - uses: styfle/cancel-workflow-action
         with:
           acces-token: ${{ github.token }}
 
@@ -43,7 +42,7 @@ jobs:
         uses: mirromutth/mysql-action@v1.1
         with:
           mysql root password: 'password'
-        run: mysql > database/db.sql
+      - run: mysql > database/db.sql
       - uses: actions/setup-node@v3
         with:
           cache: 'npm'
