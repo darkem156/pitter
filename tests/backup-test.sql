@@ -49,6 +49,8 @@ CREATE TABLE `publicaciones` (
 LOCK TABLES `publicaciones` WRITE;
 UNLOCK TABLES;
 
+INSERT INTO `publicaciones` VALUES (1,'ola',1,'2022-09-18 02:03:14')
+
 DROP TABLE IF EXISTS `sessions`;
 CREATE TABLE `sessions` (
   `session_id` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
@@ -78,7 +80,7 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_name` (`user_name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
+utf8
 LOCK TABLES `users` WRITE;
 INSERT INTO `users` VALUES (1,'ola','ola','2022-09-18 01:50:57');
 UNLOCK TABLES;
