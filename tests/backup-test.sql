@@ -49,7 +49,7 @@ CREATE TABLE `publicaciones` (
 LOCK TABLES `publicaciones` WRITE;
 UNLOCK TABLES;
 
-INSERT INTO `publicaciones` VALUES (1,'ola',1,'2022-09-18 02:03:14')
+INSERT INTO `publicaciones` VALUES (1,'ola',1,'2022-09-18 02:03:14');
 
 DROP TABLE IF EXISTS `sessions`;
 CREATE TABLE `sessions` (
