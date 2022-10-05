@@ -11,7 +11,7 @@ jobs:
 
   avoid_reduncy:
     runs-on: ubuntu-18.04
-    setps: 
+    steps: 
     - uses: styfle/cancel-workflow-action
       with:
         acces-token: ${{ github.token }}
@@ -36,7 +36,7 @@ jobs:
   test:
     needs: [build]
     runs-on: ubuntu-18.04
-    setps:
+    steps:
     - uses: actions/checkout@v3
     - name: Setup MySQL
       uses: mirromutth/mysql-action@v1.1
