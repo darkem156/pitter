@@ -12,7 +12,7 @@ jobs:
   avoid_reduncy:
     runs-on: ubuntu-18.04
     steps: 
-    - uses: styfle/cancel-workflow-action
+    - uses: styfle/cancel-workflow-action@0.9.1
       with:
         acces-token: ${{ github.token }}
 
