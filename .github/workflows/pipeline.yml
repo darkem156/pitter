@@ -51,6 +51,8 @@ jobs:
     - run: |
         mysql --host 127.0.0.1 -uroot -ppassword < database/db.sql
         mysql --host 127.0.0.1 -uroot -ppassword -e "SHOW DATABASES"
+        mysql --host 127.0.0.1 -uroot -ppassword -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';"
+        mysql --host 127.0.0.1 -uroot -ppassword -e "flush privileges;"
     - name: Install Dependencies
       run: npm ci
     - uses: actions/download-artifact@v3
@@ -59,8 +61,6 @@ jobs:
         path: src/public
     - name: Test
       run: npm test
-      env:
-        DB_HOST: 127.0.0.1
 
   deploy:
     needs: [test]
