@@ -11,7 +11,7 @@ describe("API Testing", () =>
   
   test("Get publications with login should respond with a json", async () =>
   {
-    const res = await request(app).get("/api/getPublications").set("Cookie", "cookie-session=s%3AZoTqrBhKh3ymipSSIF0LFkWeD0hJ41lq.IteeE5FpSm53X8VfVxkNcb%2FcvYHJ5M3DKKj%2FMs0z4%2BI").send()
+    const res = await request(app).get("/api/getPublications").set("Cookie", "cookie-session=s%3AC86V_1SlOffQZTOHY85n9Oy6L55K85AA.fUA8%2BKylTGv76ZaQKw%2FOCKfR8mBHcTQ%2BTz%2BfeY96AUQ").send()
     expect(res.status).toEqual(200)
     expect(res.body).toBeInstanceOf(Object);
   })
@@ -25,7 +25,7 @@ describe("API Testing", () =>
 
   test("Get session with login should respond with 200 and session true", async() =>
   {
-    const res = await request(app).get("/api/getSession").set("Cookie", "cookie-session=s%3AZoTqrBhKh3ymipSSIF0LFkWeD0hJ41lq.IteeE5FpSm53X8VfVxkNcb%2FcvYHJ5M3DKKj%2FMs0z4%2BI").send()
+    const res = await request(app).get("/api/getSession").set("Cookie", "cookie-session=s%3AC86V_1SlOffQZTOHY85n9Oy6L55K85AA.fUA8%2BKylTGv76ZaQKw%2FOCKfR8mBHcTQ%2BTz%2BfeY96AUQ").send()
     expect(res.status).toBe(200)
     expect(res.body.session).toEqual(true)
   })
@@ -54,13 +54,13 @@ describe("api/publication Testing", () =>
 
   test("Publish with login and content should respond with 201", async () =>
   {
-    const res = await request(app).post("/api/publication/publish").set("Cookie", "cookie-session=s%3AZoTqrBhKh3ymipSSIF0LFkWeD0hJ41lq.IteeE5FpSm53X8VfVxkNcb%2FcvYHJ5M3DKKj%2FMs0z4%2BI").send({ content: "ola" })
+    const res = await request(app).post("/api/publication/publish").set("Cookie", "cookie-session=s%3AC86V_1SlOffQZTOHY85n9Oy6L55K85AA.fUA8%2BKylTGv76ZaQKw%2FOCKfR8mBHcTQ%2BTz%2BfeY96AUQ").send({ content: "ola" })
     expect(res.status).toEqual(201)
   })
 
   test("Publish with login but non content should respond with 400", async () =>
   {
-    const res = await request(app).post("/api/publication/publish").set("Cookie", "cookie-session=s%3AZoTqrBhKh3ymipSSIF0LFkWeD0hJ41lq.IteeE5FpSm53X8VfVxkNcb%2FcvYHJ5M3DKKj%2FMs0z4%2BI").send()
+    const res = await request(app).post("/api/publication/publish").set("Cookie", "cookie-session=s%3AC86V_1SlOffQZTOHY85n9Oy6L55K85AA.fUA8%2BKylTGv76ZaQKw%2FOCKfR8mBHcTQ%2BTz%2BfeY96AUQ").send()
     expect(res.status).toEqual(400)
   })
 })
@@ -168,10 +168,10 @@ describe("api/user Testing", () =>
 
   test("Following and unfollowing user with login respond with 201 and 205 respectively", async () =>
   {
-    const follow = await request(app).get("/api/user/1/follow").set("Cookie", "cookie-session=s%3AZoTqrBhKh3ymipSSIF0LFkWeD0hJ41lq.IteeE5FpSm53X8VfVxkNcb%2FcvYHJ5M3DKKj%2FMs0z4%2BI").send()
+    const follow = await request(app).get("/api/user/1/follow").set("Cookie", "cookie-session=s%3AC86V_1SlOffQZTOHY85n9Oy6L55K85AA.fUA8%2BKylTGv76ZaQKw%2FOCKfR8mBHcTQ%2BTz%2BfeY96AUQ").send()
     expect(follow.status).toEqual(201)
 
-    const unFollow = await request(app).get("/api/user/1/unFollow").set("Cookie", "cookie-session=s%3AZoTqrBhKh3ymipSSIF0LFkWeD0hJ41lq.IteeE5FpSm53X8VfVxkNcb%2FcvYHJ5M3DKKj%2FMs0z4%2BI").send()
+    const unFollow = await request(app).get("/api/user/1/unFollow").set("Cookie", "cookie-session=s%3AC86V_1SlOffQZTOHY85n9Oy6L55K85AA.fUA8%2BKylTGv76ZaQKw%2FOCKfR8mBHcTQ%2BTz%2BfeY96AUQ").send()
     expect(unFollow.status).toEqual(205)
   })
 })
