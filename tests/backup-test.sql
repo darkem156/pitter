@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS `following`;
+
 CREATE TABLE `following` (
   `id_follower` bigint unsigned NOT NULL,
   `id_following` bigint unsigned NOT NULL
