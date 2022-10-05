@@ -80,7 +80,7 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_name` (`user_name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-utf8
+
 LOCK TABLES `users` WRITE;
 INSERT INTO `users` VALUES (1,'ola','ola','2022-09-18 01:50:57');
 UNLOCK TABLES;
