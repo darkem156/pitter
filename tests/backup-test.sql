@@ -66,7 +66,7 @@ CREATE TABLE `sessions` (
 
 LOCK TABLES `sessions` WRITE;
 /*!40000 ALTER TABLE `sessions` DISABLE KEYS */;
-INSERT INTO `sessions` VALUES ('C86V_1SlOffQZTOHY85n9Oy6L55K85AA',1665024863,'{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"},\"id_user\":1,\"user\":\"ola\",\"name\":\"ola\"}');
+INSERT INTO `sessions` VALUES ('C86V_1SlOffQZTOHY85n9Oy6L55K85AA',9999999999999,'{\"cookie\":{\"originalMaxAge\":null,\"expires\":null,\"httpOnly\":true,\"path\":\"/\"},\"id_user\":1,\"user\":\"ola\",\"name\":\"ola\"}');
 UNLOCK TABLES;
 
 DROP TABLE IF EXISTS `users`;
