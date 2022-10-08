@@ -81,6 +81,7 @@ jobs:
         HD_DB_DATABASE: ${{ secrets.DB_DATABASE }}
 
   docker:
+    needs: [test]
     runs-on: ubuntu-latest
     steps:
       -
