@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+  mysqldb:
+    image: mysql:latest
+    restart: always
+    container_name: mysqldb
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+
+  pitter:
+    depends_on:
+      - mysqldb
+    build: .
+    image: pitter
+    container_name: pitter
+    restart: always
+    ports:
+      - 3000:3000
+    environment:
+      - DB_HOST=mysqldb
