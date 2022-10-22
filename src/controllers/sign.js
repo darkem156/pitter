@@ -4,7 +4,8 @@ const { Op } = require('sequelize')
 
 async function signUp(req, res)
 {
-  const { user_name, name, email, password } = req.body;
+  const { user_name, name, email } = req.body;
+  let password = req.body.password
 
   const regExpEmail = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/; 
     
@@ -16,26 +17,35 @@ async function signUp(req, res)
     res.status(409).json({"error": "Nombre de usuario en uso"});
   else if (await User.findOne({ where: { email } })) 
     res.status(409).json({"error": "Este correo ya está registrado"});
-    
-  password = await bcrypt.hash(password, 8);
-  const newUser = await User.create({
-    name,
-    email,
-    password,
-    user_name
-  })
-  res.status(201).json({"error": ""});
+  else
+  {
+    password = await bcrypt.hash(password, 8);
+    const newUser = await User.create({
+      name,
+      email,
+      password,
+      user_name
+    })
+    res.status(201).json({ error: "" });
+  }
 }
 
 async function signIn(req, res)
 {
   const { dato, password } = req.body;
   if (!dato) 
+  {
     res.status(400).json({"error": "Debes utilizar un correo electrónico, nombre de usuario o id" });
-  else if (!password) res.status(400).json({"error": "Debes utilizar una contraseña para ingresar"});
+    return;
+  }
+  else if (!password) 
+  {
+    res.status(400).json({"error": "Debes utilizar una contraseña para ingresar"});
+    return;
+  }
 
   let id = isNaN(parseInt(dato)) ? -1 : dato
-  let user = await User.findOne({ where: 
+  const user = await User.findOne({ where: 
   { 
     [Op.or]: [
       { id: id },
@@ -43,20 +53,23 @@ async function signIn(req, res)
       { email: dato }
     ]
   }})
-  if(!user) res.json({"error": "Usuario o contraseña incorrectos"});
+  if(!user) 
+  {
+    res.json({"error": "Usuario o contraseña incorrectos"});
+    return;
+  }
   const passwordCorrect = await bcrypt.compare(password, user.password);
   if(passwordCorrect)
   {
-    let data =
-    {
-      id_user: user.id,
-      user: user.user_name,
-      name: user.name,
-    }
+    console.log(user.id)
     req.session.id_user = user.id;
     req.session.user = user.user_name;
     req.session.name = user.name;
-    res.json(data);
+    res.json({
+      id_user: user.id,
+      user: user.user_name,
+      name: user.name
+    });
   }
   else res.json({"error": "Usuario o contraseña incorrectos"});
 }

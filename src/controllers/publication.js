@@ -2,7 +2,11 @@ const { Publication, query } = require('./models.js');
 
 const getPublications = async (req, res) =>
 {
-  if(!req.session.id_user) res.status(401).json({ error: "Must LogIn" })
+  if(!req.session.id_user) 
+  {
+    res.status(401).json({ error: "Must LogIn" })
+    return;
+  }
   let data = await query(`SELECT * FROM Publications INNER JOIN Follows ON id_following=id_user  INNER JOIN Users ON id_user=Users.id WHERE id_follower=${ req.session.id_user } LIMIT 10;`)
   if(!data[0][0])
   {
@@ -32,7 +36,11 @@ const publish = async (req, res) =>
   const { content } = req.body
   const { id_user } = req.session
   
-  if(!req.session.id_user) res.status(401).json({ error: "Necesitas iniciar sesion para publicar" })
+  if(!req.session.id_user) 
+  {
+    res.status(401).json({ error: "Necesitas iniciar sesion para publicar" })
+    return;
+  }
   if(content) 
   {
     const publication = await Publication.create({ content, id_user })  
