@@ -24,7 +24,7 @@
         <div class="publication-container">
           <div class="publication-data">
             <div class="user-data">
-              <div class="nombreUsuario"><a v-bind:href="'/user/' + item.id_usuario">{{item.name}}</a></div>
+              <div class="nombreUsuario"><a v-bind:href="'/user/' + item.id_user">{{item.name}}</a></div>
               <div class="user-name"><p>@{{ item.user_name }}</p></div>
             </div>  
             <div class="fecha">
@@ -35,7 +35,7 @@
             </div>
           </div>
           <div class="publication-content">
-            <p>{{ item.contenido }}</p>
+            <p>{{ item.content}}</p>
           </div>
         </div>
       </div>
@@ -109,7 +109,7 @@ export default {
       let resp = await fetch('/api/publication/publish',
       {
         method: 'POST',
-        body: JSON.stringify({'content': this.data.content}),
+        body: JSON.stringify({content: this.data.content}),
         headers:
         {
           'Accept': 'application/json',
@@ -117,7 +117,6 @@ export default {
         }
       })
       let res = await resp.json();
-      console.log(res.error);
       if(res.error) this.data.error = res.error;
       else console.log(res.estado);
       this.data.content = "";
