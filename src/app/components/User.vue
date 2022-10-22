@@ -30,7 +30,7 @@
           </div>
         </div>
         <div class="publication-content">
-          <p>{{ item.contenido }}</p>
+          <p>{{ item.content }}</p>
         </div>
       </div>
     </div>
@@ -69,8 +69,7 @@ export default {
         }
       })
       let res = await response.json();
-      console.log(res[0]);
-      return res[0];
+      return res;
     },
     async follow()
     {
@@ -105,6 +104,7 @@ export default {
         }
       })
       let res = await response.json();
+      console.log(res)
       if(res.followed === 'unfollowed')
       {
         this.data.followed = false;

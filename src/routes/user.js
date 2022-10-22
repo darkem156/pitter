@@ -1,6 +1,4 @@
 const express = require('express');
-const database = require('../database');
-const follow = require('../functions/follow.js')
 const router = express.Router();
  
 router.get('/:id', async (req, res)=>

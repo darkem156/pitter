@@ -3,7 +3,7 @@ const express = require('express');
 const morgan = require('morgan');
 const session = require('express-session');
 const MySQLDB = require('express-mysql-session');
-const database = require('./database');
+
 const app = express();
 
 //settings
@@ -14,7 +14,12 @@ app.use(morgan('dev'));
 app.use(express.json());
 
 //sessions
-const sessionStorage = new MySQLDB(database.options);
+const sessionStorage = new MySQLDB({
+  host: process.env.DB_HOST || 'localhost',
+  user: process.env.DB_USER || 'root',
+  password: process.env.DB_PASSWORD || 'password',
+  database: process.env.DB_DATABASE || 'pitter',
+});
 app.use(session(
     {
         key: 'cookie-session',
@@ -26,10 +31,7 @@ app.use(session(
 ))
 
 //routes
-app.use('/api/publication', require('./routes/publications'));
-app.use('/api', require('./routes/sign'));
 app.use('/api', require('./routes/api'));
-app.use('/api/user', require('./routes/user'));
 
 app.get('/user/:id', async (req, res) =>
 {

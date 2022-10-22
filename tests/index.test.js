@@ -85,6 +85,17 @@ describe("SignUp testing", () =>
     })
   })
 
+  test("api/signUp with new user and new email should respond with 201", async () =>
+  {
+    const res = await request(app).post("/api/signUp").send({
+      user_name: `ola${ Math.random().toFixed(4) }`,
+      name: "ola",
+      email: `ola${ Math.random().toFixed(4) }@gmail.com`,
+      password: "ola"
+    })
+    expect(res.status).toEqual(201)
+  })
+
   test("api/signUp with existing user or email should respond with 409", async() =>
   {
     const resEmail = await request(app).post("/api/signUp").send({
@@ -102,17 +113,6 @@ describe("SignUp testing", () =>
       password: "ola"
     })
     expect(resUser.status).toEqual(409)
-  })
-
-  test("api/signUp with new user and new email should respond with 201", async () =>
-  {
-    const res = await request(app).post("/api/signUp").send({
-      user_name: `ola${ Math.random().toFixed(4) }`,
-      name: "ola",
-      email: `ola${ Math.random().toFixed(4) }@gmail.com`,
-      password: "ola"
-    })
-    expect(res.status).toEqual(201)
   })
 })
 
@@ -166,13 +166,13 @@ describe("api/user Testing", () =>
     expect(unFollow.status).toEqual(401)
   })
 
-  test("Following and unfollowing user with login respond with 201 and 205 respectively", async () =>
+  test("Following and unfollowing user with login respond with 201 and 200 respectively", async () =>
   {
     const follow = await request(app).get("/api/user/1/follow").set("Cookie", "cookie-session=s%3AC86V_1SlOffQZTOHY85n9Oy6L55K85AA.fUA8%2BKylTGv76ZaQKw%2FOCKfR8mBHcTQ%2BTz%2BfeY96AUQ").send()
     expect(follow.status).toEqual(201)
 
     const unFollow = await request(app).get("/api/user/1/unFollow").set("Cookie", "cookie-session=s%3AC86V_1SlOffQZTOHY85n9Oy6L55K85AA.fUA8%2BKylTGv76ZaQKw%2FOCKfR8mBHcTQ%2BTz%2BfeY96AUQ").send()
-    expect(unFollow.status).toEqual(205)
+    expect(unFollow.status).toEqual(200)
   })
 })
 
